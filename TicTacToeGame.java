@@ -1,13 +1,18 @@
 import java.util.Scanner;
+
 public class TicTacToe {
+
     static char[][] board = new char[3][3];
     static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
         System.out.println("Welcome to Tic Tac Toe!");
         System.out.println("Player 1: X");
         System.out.println("Player 2: O");
         System.out.println();
+
         boolean playAgain;
+
         do {
             initializeBoard();
             playGame();
@@ -16,6 +21,8 @@ public class TicTacToe {
 
         System.out.println("Thanks for playing!");
     }
+
+    // Initialize empty board
     static void initializeBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -23,12 +30,16 @@ public class TicTacToe {
             }
         }
     }
+
+    // Main game loop
     static void playGame() {
         char currentPlayer = 'X';
         boolean gameOver = false;
+
         while (!gameOver) {
             printBoard();
             playerMove(currentPlayer);
+
             if (checkWinner(currentPlayer)) {
                 printBoard();
                 System.out.println("Player " + (currentPlayer == 'X' ? "1" : "2")
@@ -39,13 +50,17 @@ public class TicTacToe {
                 System.out.println("Game is a draw!");
                 gameOver = true;
             } else {
+                // Switch player
                 currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
             }
         }
     }
+
+    // Print board with row & column numbers
     static void printBoard() {
         System.out.println("\nCurrent Board:");
         System.out.println("   0   1   2");
+
         for (int i = 0; i < 3; i++) {
             System.out.print(i + " ");
             for (int j = 0; j < 3; j++) {
@@ -57,14 +72,18 @@ public class TicTacToe {
         }
         System.out.println();
     }
+
+    // Handle player input
     static void playerMove(char player) {
         int row, col;
+
         while (true) {
             System.out.println("Player " + (player == 'X' ? "1" : "2")
                     + "'s turn (" + player + ")");
             System.out.print("Enter row and column: ");
             row = sc.nextInt();
             col = sc.nextInt();
+
             if (row < 0 || row > 2 || col < 0 || col > 2) {
                 System.out.println("Invalid position! Try again.");
             } else if (board[row][col] != ' ') {
@@ -75,7 +94,10 @@ public class TicTacToe {
             }
         }
     }
+
+    // Check winner
     static boolean checkWinner(char player) {
+        // Rows & Columns
         for (int i = 0; i < 3; i++) {
             if ((board[i][0] == player &&
                  board[i][1] == player &&
@@ -86,6 +108,8 @@ public class TicTacToe {
                 return true;
             }
         }
+
+        // Diagonals
         return (board[0][0] == player &&
                 board[1][1] == player &&
                 board[2][2] == player) ||
@@ -93,6 +117,8 @@ public class TicTacToe {
                 board[1][1] == player &&
                 board[2][0] == player);
     }
+
+    // Check draw
     static boolean isBoardFull() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -101,6 +127,7 @@ public class TicTacToe {
         }
         return true;
     }
+    // Ask to play again
     static boolean askPlayAgain() {
         System.out.print("Do you want to play again? (y/n): ");
         char choice = sc.next().toLowerCase().charAt(0);
